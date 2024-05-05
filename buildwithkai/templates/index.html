@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/style.css" />
+    <script src="static/script.js" defer></script>
+    <title>Registration Form</title>
+</head>
+
+<body>
+    <form action="#" class="form">
+        <h1 class="text-center">Enter Details</h1>
+        <!-- Progress bar -->
+        <div class="progressbar">
+            <div class="progress" id="progress"></div>
+
+            <div class="progress-step progress-step-active" data-title="Location Details"></div>
+            <div class="progress-step" data-title="Area"></div>
+            <div class="progress-step" data-title="Hotel"></div>
+            <div class="progress-step" data-title="Budget"></div>
+        </div>
+
+        <!-- Steps -->
+        <!-- first step -->
+        <div class="form-step form-step-active">
+            <div class="input-group">
+                <label for="username">Your location</label>
+                <input type="text" name="location" id="location" />
+            </div>
+            <div class="input-group">
+                <label for="destination">No. of Days</label>
+                <input type="text" name="destination" id="destination" />
+            </div>
+            <div class="">
+                <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
+            </div>
+        </div>
+        <!-- 2nd step -->
+<div class="form-step">
+    <div class="input-group">
+        <label for="hotels">Choose area of hotels</label>
+        <select name="hotels">
+            <option value="Beaches">Beaches</option>
+            <option value="Mountain">Mountain Area</option>
+            <option value="Cultural">Cultural Places</option>
+            <option value="Historicplaces">Historic places</option>
+        </select>
+    </div>
+    <div class="btns-group">
+        <a href="#" class="btn btn-prev">Previous</a>
+        <a href="#" class="btn btn-next">Next</a>
+    </div>
+</div>
+
+<!-- 3rd step -->
+<div class="form-step">
+    <div class="input-group">
+        <label for="timeOfTravel">Enter the time you would like to travel</label>
+        <input type="text" id="timeOfTravel" name="timeOfTravel" placeholder="Enter time" />
+    </div>
+    <div class="btns-group">
+        <a href="#" class="btn btn-prev">Previous</a>
+        <a href="#" class="btn btn-next">Next</a>
+    </div>
+</div>
+
+
+        <!-- 4th step -->
+        <div class="form-step">
+            <div class="input-group">
+                <label for="budget">Budget in $</label>
+                <input type="number" name="budget" id="budget" />
+            </div>
+            <div class="input-group">
+                <label for="estBudget">Estimated budget</label>
+                <!-- <input type="text" name="estBudget" id="estBudget" /> -->
+                <span id="estimatedBudget"></span>
+            </div>
+            <div class="btns-group">
+                <a href="#" class="btn btn-prev">Previous</a>
+                <input type="submit" value="Submit" class="btn" />
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

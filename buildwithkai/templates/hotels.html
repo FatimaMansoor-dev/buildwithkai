@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2; /* Light gray background */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            color: #333; /* Dark gray text color */
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc; /* Light gray border */
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff; /* Blue background */
+            color: #fff; /* White text color */
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue background on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Search for hotels in any city of Pakistan now!</h1>
+    <div class="container">
+        <form id="hotelForm">
+            <div class="input-container">
+                <input type="text" id="cityInput" placeholder="Enter city name" required>
+            </div>
+            <div class="input-container">
+                <input type="submit" value="Search Hotels">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("hotelForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            var city = document.getElementById("cityInput").value.trim();
+            
+            // Redirect to displayhotel page with the city as a query parameter
+            window.location.href = "/displayhotel?city=" + encodeURIComponent(city);
+        });
+    </script>
+    
+</body>
+</html>

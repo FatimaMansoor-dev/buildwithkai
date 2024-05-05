@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hotel Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Website</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in hotel_details %}
+                <tr>
+                    {% for item in detail.split(',') %}
+                        <td>{{ item.strip() }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

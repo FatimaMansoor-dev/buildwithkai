@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEKHO Pakistan!</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('static/imgs/BG.jpg'); /* Path to your background image */
+        background-size: cover; /* Cover the entire background */
+        background-position: center; /* Center the background image */
+        background-attachment: fixed; /* Fix the background image */
+    }
+    h1 {
+        color: #000000; /* Dark blue text color */
+        text-align: center;
+        text-decoration: underline;
+    }
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 50px auto;
+        background-color: #ffffff; /* White background for the table */
+        border: 1px solid #004d99; /* Dark blue border */
+    }
+    th, td {
+        border: 0px solid #004d99; /* Dark blue border */
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #004d99; /* Navy blue background for header */
+        color: #ffffff; /* White text color for header */
+    }
+    .day-row {
+        background-color: #004d99; /* Navy blue background for day rows */
+        color: #ffffff; /* White text color for day rows */
+    }
+    .cost-table {
+        width: 60%;
+        margin: 20px auto;
+        border: 1px solid #004d99; /* Dark blue border */
+    }
+    .cost-table th, .cost-table td {
+        border: 1px solid #004d99; /* Dark blue border */
+        padding: 8px;
+    }
+    .total-cost-row {
+        background-color: #cccccc; /* Grey background for total cost row */
+        margin: 2px;
+    }
+    .note {
+    margin-top: 5px;
+    margin-left: 1%;
+    padding: 0px; /* Padding for note content */
+    border: 0px solid #004d99; /* Dark blue border */
+}
+
+.note p {
+    background-color: white; /* Set background color to transparent */
+}
+
+.logo {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logo img {
+    max-width: 200px; /* Adjust the maximum width of the logo */
+    height: auto;
+}
+
+
+a {
+    background-color: white !important;
+}
+
+</style>
+</head>
+<body>
+<div class="logo">
+    <img src="static/imgs/logo.jpeg" alt="DEKHO Pakistan Logo"> 
+</div>
+<h1>DEKHO Pakistan</h1>
+<table>
+    <tr>
+        <th><center>Please review your Customized Travel Plan</center></th>
+    </tr>
+    <!-- Data will be inserted here -->
+</table>
+
+
+<div class="note">
+    <!-- Note will be inserted here -->
+<div style="display: flex; justify-content: center; align-items: center;">
+    <button id="hotels">Get Hotel Details Here</button>
+    <button id="voiceButton" style="margin-left: auto;">
+        <img src="static/imgs/mic.png" alt="microphone" width="40" height="50">
+    </button>
+</div>
+    
+
+
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const travelPlanJSON = urlParams.get('travel_plan');
+    const travelPlan = JSON.parse(decodeURIComponent(travelPlanJSON));
+
+    // Assign the travel plan data to the 'data' variable
+    var data = travelPlan;
+    var table = document.querySelector('table');
+    var costTable = document.querySelector('.cost-table');
+    var noteDiv = document.querySelector('.note');
+    var isCostSection = false; // Flag to identify when cost section starts
+    var costAdded = false; // Flag to identify if cost text has already been added
+
+    // Loop through the data
+    for (var i = 0; i < data.length; i++) {
+        var row = document.createElement('tr');
+        var cell = document.createElement('td');
+
+        // Check if it's a day
+        if (data[i].startsWith('*Day')) {
+            cell.colSpan = 1; // Merge cells for the Day
+            cell.innerHTML = '<u>' + data[i].replace('*', '') + '</u>'; // Remove asterisk
+            row.classList.add('day-row'); // Add class to day rows
+        } else {
+            cell.textContent = data[i].replace('*', ''); // Remove asterisk
+        }
+
+        row.appendChild(cell);
+
+        // Check if it's the start of the cost section
+        if (data[i].startsWith('*Total cost of the trip:') && !costAdded) {
+            cell.textContent = data[i].replace('*Total cost of the trip:', '');            
+            isCostSection = true;
+            costAdded = true; // Set flag to true after adding cost text
+
+            // Adding cost details
+            for (var j = i + 1; j < data.length; j++) {                
+                
+                var costDetail = data[j].split(': $'); // Splitting description and cost
+                if (costDetail.length === 1) {
+                    costDetail = data[j].split(':* $'); // Splitting description and cost with alternate delimiter
+                }
+                if (costDetail.length === 2 && costDetail[1].trim() !== '') {
+                    var costRow = document.createElement('tr');
+                    var costCell1 = document.createElement('td');
+                    var costCell2 = document.createElement('td');                
+                    costCell1.textContent = costDetail[0].replace('*', ''); // Description
+                    costCell2.textContent = '$' + costDetail[1]; // Cost
+                    costRow.appendChild(costCell1);
+                    costRow.appendChild(costCell2);
+                    costTable.appendChild(costRow);
+                }
+            }
+        }
+
+        // Append row to respective table
+        if (!isCostSection) {
+            table.appendChild(row); // Append row to main table
+        }
+    }
+    
+    // Adding note
+    var noteParagraph = document.createElement('p');
+    noteParagraph.innerHTML = '<marquee>Note: This is just a suggested itinerary. You can customize it to fit your own interests and budget.<marquee>';
+    noteDiv.appendChild(noteParagraph);
+
+    document.getElementById("voiceButton").addEventListener("click", function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/run_voicebot", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Handle response from server if needed
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send();
+});
+document.getElementById("hotels").addEventListener("click", function() {
+    window.location.href = "/hotels"; // Redirect to hotels page
+});
+
+
+</script>
+
+</body>
+</html>
